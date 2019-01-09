@@ -7,8 +7,18 @@ namespace FaviconApi.Helpers
     {
         public static string EnsureAbsoluteUrl(string url, string faviconUrl)
         {
-            if (faviconUrl.StartsWith("/"))
+            if (!IsAbsoluteUrl(faviconUrl))
             {
+                if (faviconUrl.StartsWith("./"))
+                {
+                    faviconUrl = faviconUrl.Replace("./", string.Empty);
+                }
+
+                if (!url.EndsWith("/"))
+                {
+                    url = url + "/";
+                }
+
                 return new Uri(faviconUrl, UriKind.Relative).ToAbsolute(url);
             }
 
@@ -17,7 +27,7 @@ namespace FaviconApi.Helpers
 
         public static string ToAbsolute(this Uri uri, string baseUrl)
         {
-            // Null-checks
+            if (uri == null) return string.Empty;
 
             var baseUri = new Uri(baseUrl);
 
@@ -26,7 +36,7 @@ namespace FaviconApi.Helpers
 
         public static string ToAbsolute(this Uri uri, Uri baseUri)
         {
-            // Null-checks
+            if (uri == null) return string.Empty;
 
             var relative = uri.ToRelative();
 
@@ -40,7 +50,7 @@ namespace FaviconApi.Helpers
 
         public static string ToRelative(this Uri uri)
         {
-            // Null-check
+            if (uri == null) return string.Empty;
 
             return uri.IsAbsoluteUri ? uri.PathAndQuery : uri.OriginalString;
         }
@@ -60,9 +70,16 @@ namespace FaviconApi.Helpers
             }
         }
 
+        // Make sure string url has correct format and a http as scheme if missing
         public static Uri GetUri(this string url)
         {
             return new UriBuilder(url).Uri;
+        }
+
+        private static bool IsAbsoluteUrl(string url)
+        {
+            Uri result;
+            return Uri.TryCreate(url, UriKind.Absolute, out result);
         }
     }
 }

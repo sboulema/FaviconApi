@@ -2,3 +2,5 @@
 /FaviconApi/bin
 /FaviconApi/obj
 /.vs
+/FaviconApi.Tests/bin
+/FaviconApi.Tests/obj
