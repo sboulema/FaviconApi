@@ -8,15 +8,15 @@ namespace FaviconApi.Helpers
     {
         public static string RetrieveFavicon(string url)
         {
-            string returnFavicon = null;
+            var uri = url.GetUri();
 
-            var htmlDocument = new HtmlWeb().Load(url.GetUri());
+            var htmlDocument = new HtmlWeb().Load(uri);
 
             var elementsAppleTouchIcon = htmlDocument.DocumentNode.SelectNodes("//link[contains(@rel, 'apple-touch-icon')]");
             if (elementsAppleTouchIcon != null && elementsAppleTouchIcon.Any())
             {
                 var favicon = elementsAppleTouchIcon.First();
-                returnFavicon = favicon.GetAttributeValue("href", null);
+                var returnFavicon = favicon.GetAttributeValue("href", null);
                 if (!string.IsNullOrWhiteSpace(returnFavicon))
                 {
                     return returnFavicon;
@@ -27,24 +27,23 @@ namespace FaviconApi.Helpers
             if (elements != null && elements.Any())
             {
                 var favicon = elements.First();
-                returnFavicon = favicon.GetAttributeValue("href", null);
+                var returnFavicon = favicon.GetAttributeValue("href", null);
                 if (!string.IsNullOrWhiteSpace(returnFavicon))
                 {
                     return returnFavicon;
                 }
             }
 
-            var uri = new Uri(url);
             if (uri.HostNameType == UriHostNameType.Dns)
             {
-                returnFavicon = string.Format("{0}://{1}/favicon.ico", uri.Scheme == "https" ? "https" : "http", uri.Host);
+                var returnFavicon = string.Format("{0}://{1}/favicon.ico", uri.Scheme == "https" ? "https" : "http", uri.Host);
                 if (UrlHelper.UrlExists(returnFavicon))
                 {
                     return returnFavicon;
                 }
             }
 
-            return returnFavicon;
+            return string.Empty;
         }
     }
 }

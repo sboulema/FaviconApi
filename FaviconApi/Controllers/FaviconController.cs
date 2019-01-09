@@ -15,6 +15,8 @@ namespace FaviconApi.Controllers
             var faviconUrl = FaviconHelper.RetrieveFavicon(url);
             faviconUrl = UrlHelper.EnsureAbsoluteUrl(url, faviconUrl);
 
+            if (string.IsNullOrEmpty(faviconUrl)) return Ok();
+
             using (var webClient = new WebClient())
             {
                 var data = webClient.DownloadData(faviconUrl);

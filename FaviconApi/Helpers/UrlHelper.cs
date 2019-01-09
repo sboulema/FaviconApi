@@ -7,6 +7,8 @@ namespace FaviconApi.Helpers
     {
         public static string EnsureAbsoluteUrl(string url, string faviconUrl)
         {
+            if (string.IsNullOrEmpty(faviconUrl)) return string.Empty;
+
             if (!IsAbsoluteUrl(faviconUrl))
             {
                 if (faviconUrl.StartsWith("./"))

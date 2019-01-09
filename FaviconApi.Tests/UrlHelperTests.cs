@@ -8,6 +8,7 @@ namespace FaviconApi.Tests
     {
         [DataRow("https://favicon.sboulema.nl/swagger", "./favicon-32x32.png", "https://favicon.sboulema.nl/swagger/favicon-32x32.png")]
         [DataRow("https://github.com", "https://github.com/fluidicon.png", "https://github.com/fluidicon.png")]
+        [DataRow("https://gijgo.com", "", "")]
         [DataTestMethod]
         public void EnsureAbsoluteUrlTests(string url, string faviconUrl, string expectedUrl)
         {
