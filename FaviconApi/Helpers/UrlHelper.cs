@@ -59,5 +59,10 @@ namespace FaviconApi.Helpers
                 return false;
             }
         }
+
+        public static Uri GetUri(this string url)
+        {
+            return new UriBuilder(url).Uri;
+        }
     }
 }
