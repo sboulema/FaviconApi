@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace FaviconApi
@@ -32,6 +26,8 @@ namespace FaviconApi
             {
                 c.SwaggerDoc("v1", new Info { Title = "Favicon API", Version = "v1" });
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +42,9 @@ namespace FaviconApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Favicon API V1");
             });
+
+            // Enable CORS
+            app.UseCors(builder => builder.AllowAnyOrigin());
 
             if (env.IsDevelopment())
             {
