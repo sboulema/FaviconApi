@@ -31,9 +31,7 @@ namespace FaviconApi.Helpers
         {
             if (uri == null) return string.Empty;
 
-            var baseUri = new Uri(baseUrl);
-
-            return uri.ToAbsolute(baseUri);
+            return uri.ToAbsolute(GetUri(baseUrl));
         }
 
         public static string ToAbsolute(this Uri uri, Uri baseUri)
@@ -73,15 +71,10 @@ namespace FaviconApi.Helpers
         }
 
         // Make sure string url has correct format and a http as scheme if missing
-        public static Uri GetUri(this string url)
-        {
-            return new UriBuilder(url).Uri;
-        }
+        public static Uri GetUri(this string url) 
+            => new UriBuilder(url).Uri;
 
-        private static bool IsAbsoluteUrl(string url)
-        {
-            Uri result;
-            return Uri.TryCreate(url, UriKind.Absolute, out result);
-        }
+        private static bool IsAbsoluteUrl(string url) 
+            => Uri.TryCreate(url, UriKind.Absolute, out var result);
     }
 }
