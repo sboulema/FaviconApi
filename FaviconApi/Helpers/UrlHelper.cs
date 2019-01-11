@@ -9,6 +9,11 @@ namespace FaviconApi.Helpers
         {
             if (string.IsNullOrEmpty(faviconUrl)) return string.Empty;
 
+            if (faviconUrl.StartsWith("//"))
+            {
+                return faviconUrl.Replace("//", "https://");
+            }
+
             if (!IsAbsoluteUrl(faviconUrl))
             {
                 if (faviconUrl.StartsWith("./"))

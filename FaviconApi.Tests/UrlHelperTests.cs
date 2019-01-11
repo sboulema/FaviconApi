@@ -10,7 +10,9 @@ namespace FaviconApi.Tests
         [DataRow("https://github.com", "https://github.com/fluidicon.png", "https://github.com/fluidicon.png")]
         [DataRow("https://gijgo.com", "", "")]
         [DataRow("https://httpbin.org", "/static/favicon.ico", "https://httpbin.org/static/favicon.ico")]
-        [DataRow("nu.nl", "/static/favicon.ico", "http://nu.nl/static/favicon.ico")]
+        [DataRow("nu.nl", "/static/img/atoms/images/favicon/apple-touch-icon-57x57.png", "http://nu.nl/static/img/atoms/images/favicon/apple-touch-icon-57x57.png")]
+        [DataRow("http://http-prompt.com/", "/favicon.ico", "http://http-prompt.com/favicon.ico")]
+        [DataRow("https://gitter.im/eliangcs/http-prompt", "//cdn03.gitter.im/_s/66fc778/images/favicon-normal.ico", "https://cdn03.gitter.im/_s/66fc778/images/favicon-normal.ico")]
         [DataTestMethod]
         public void EnsureAbsoluteUrlTests(string url, string faviconUrl, string expectedUrl)
         {

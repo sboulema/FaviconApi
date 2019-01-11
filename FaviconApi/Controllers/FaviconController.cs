@@ -33,9 +33,9 @@ namespace FaviconApi.Controllers
                     return File(data, mimeType);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"{url} | {faviconUrl}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"{url} | {faviconUrl} | {e.Message} | {e.StackTrace}");
             }
         }
     }
