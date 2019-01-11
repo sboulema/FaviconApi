@@ -65,6 +65,7 @@ namespace FaviconApi.Helpers
             return uri.IsAbsoluteUri ? uri.PathAndQuery : uri.OriginalString;
         }
 
+        // Check if the url exists by checking for a 200 OK response
         public static bool UrlExists(string url)
         {
             try
@@ -84,7 +85,8 @@ namespace FaviconApi.Helpers
         public static Uri GetUri(this string url) 
             => new UriBuilder(url).Uri;
 
+        // Check if the url is absolute eg. starts with http
         private static bool IsAbsoluteUrl(string url) 
-            => Uri.TryCreate(url, UriKind.Absolute, out var result);
+            => url.StartsWith("http://") || url.StartsWith("https://");
     }
 }
