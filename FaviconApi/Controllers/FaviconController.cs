@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using FaviconApi.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FaviconApi.Controllers
@@ -17,17 +18,24 @@ namespace FaviconApi.Controllers
 
             if (string.IsNullOrEmpty(faviconUrl)) return Ok();
 
-            using (var webClient = new WebClient())
+            try
             {
-                var data = webClient.DownloadData(faviconUrl);
-                var mimeType = webClient.ResponseHeaders["Content-Type"];
-
-                if (base64)
+                using (var webClient = new WebClient())
                 {
-                    return Ok($"data:{mimeType};base64,{Convert.ToBase64String(data)}");
-                }
+                    var data = webClient.DownloadData(faviconUrl);
+                    var mimeType = webClient.ResponseHeaders["Content-Type"];
 
-                return File(data, mimeType);
+                    if (base64)
+                    {
+                        return Ok($"data:{mimeType};base64,{Convert.ToBase64String(data)}");
+                    }
+
+                    return File(data, mimeType);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"{url} | {faviconUrl}");
             }
         }
     }
