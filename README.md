@@ -5,7 +5,7 @@ Get the favicon for a website either as image or base64 from the website URL.
 ## Getting Started
 
 - Run Docker image sboulema/faviconapi
-- Go to `{{host}}/swagger`
+- Go to `{{host}}` to test the api using Swagger
 
 ## Parameters
 

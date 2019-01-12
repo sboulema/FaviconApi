@@ -24,8 +24,19 @@ namespace FaviconApi
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Favicon API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {
+                    Title = "Favicon API",
+                    Version = "v1",
+                    Contact = new Contact { Name = "Samir L. Boulema", Email = "sboulema@gmail.com", Url = "https://github.com/sboulema/FaviconApi" },
+                    License = new License { Name = "MIT", Url = "https://github.com/sboulema/FaviconApi/blob/master/LICENSE" },
+                    Description = "Get the favicon for a website either as image or base64 from the website URL."
+                });
+                c.EnableAnnotations();
             });
+
+            services.AddMemoryCache();
+
+            services.AddHealthChecks();
 
             services.AddCors();
         }
@@ -40,11 +51,14 @@ namespace FaviconApi
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
+                c.RoutePrefix = "";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Favicon API V1");
             });
 
             // Enable CORS
             app.UseCors(builder => builder.AllowAnyOrigin());
+
+            app.UseHealthChecks("/healthcheck");
 
             if (env.IsDevelopment())
             {
