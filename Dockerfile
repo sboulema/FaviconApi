@@ -25,6 +25,6 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
-COPY --from=build-env /app/FaviconApi/out .
+COPY --from=publish /app/FaviconApi/out .
 HEALTHCHECK CMD curl --fail http://localhost:5000/healthcheck || exit
 ENTRYPOINT ["dotnet", "FaviconApi.dll"]
