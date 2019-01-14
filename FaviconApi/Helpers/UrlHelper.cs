@@ -73,7 +73,7 @@ namespace FaviconApi.Helpers
                 var webRequest = WebRequest.Create(url);
                 webRequest.Method = "HEAD";
                 var webResponse = (HttpWebResponse)webRequest.GetResponse();
-                return webResponse.StatusCode == HttpStatusCode.OK;
+                return webResponse.StatusCode == HttpStatusCode.OK && webResponse.ContentLength > 0;
             }
             catch (Exception)
             {
