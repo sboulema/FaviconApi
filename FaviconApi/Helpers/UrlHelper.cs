@@ -18,17 +18,17 @@ namespace FaviconApi.Helpers
             {
                 if (faviconUrl.StartsWith("./"))
                 {
+                    if (!url.EndsWith("/"))
+                    {
+                        url = url + "/";
+                    }
+
                     faviconUrl = faviconUrl.Replace("./", string.Empty);
                 }
 
                 if (faviconUrl.StartsWith("/"))
                 {
                     return new Uri(GetUri(url), faviconUrl).AbsoluteUri;
-                }
-
-                if (!url.EndsWith("/"))
-                {
-                    url = url + "/";
                 }
 
                 return new Uri(faviconUrl, UriKind.Relative).ToAbsolute(url);
