@@ -18,18 +18,17 @@ namespace FaviconApi.Helpers
             {
                 if (faviconUrl.StartsWith("./"))
                 {
+                    if (!url.EndsWith("/"))
+                    {
+                        url = url + "/";
+                    }
+
                     faviconUrl = faviconUrl.Replace("./", string.Empty);
                 }
 
                 if (faviconUrl.StartsWith("/"))
                 {
                     return new Uri(GetUri(url), faviconUrl).AbsoluteUri;
-                }
-
-                if (!url.EndsWith("/") &&
-                    !faviconUrl.StartsWith("../"))
-                {
-                    url = url + "/";
                 }
 
                 return new Uri(faviconUrl, UriKind.Relative).ToAbsolute(url);
@@ -74,7 +73,7 @@ namespace FaviconApi.Helpers
                 var webRequest = WebRequest.Create(url);
                 webRequest.Method = "HEAD";
                 var webResponse = (HttpWebResponse)webRequest.GetResponse();
-                return webResponse.StatusCode == HttpStatusCode.OK;
+                return webResponse.StatusCode == HttpStatusCode.OK && webResponse.ContentLength > 0;
             }
             catch (Exception)
             {
