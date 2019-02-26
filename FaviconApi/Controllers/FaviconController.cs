@@ -44,17 +44,16 @@ namespace FaviconApi.Controllers
                         FaviconUrl = UrlHelper.EnsureAbsoluteUrl(url, FaviconHelper.RetrieveFavicon(url))
                     };
 
-                    if (string.IsNullOrEmpty(model.FaviconUrl))
+                    if (string.IsNullOrEmpty(model.FaviconUrl) || !UrlHelper.UrlExists(model.FaviconUrl))
                     {
                         model.Data = null;
+                        return model;
                     }
-                    else
+
+                    using (var webClient = new WebClient())
                     {
-                        using (var webClient = new WebClient())
-                        {
-                            model.Data = webClient.DownloadData(model.FaviconUrl);
-                            model.Mimetype = webClient.ResponseHeaders["Content-Type"];
-                        }
+                        model.Data = webClient.DownloadData(model.FaviconUrl);
+                        model.Mimetype = webClient.ResponseHeaders["Content-Type"];
                     }
 
                     return model;

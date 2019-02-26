@@ -26,7 +26,8 @@ namespace FaviconApi.Helpers
                     return new Uri(GetUri(url), faviconUrl).AbsoluteUri;
                 }
 
-                if (!url.EndsWith("/"))
+                if (!url.EndsWith("/") &&
+                    !faviconUrl.StartsWith("../"))
                 {
                     url = url + "/";
                 }

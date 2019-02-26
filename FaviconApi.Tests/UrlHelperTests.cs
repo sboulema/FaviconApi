@@ -14,6 +14,7 @@ namespace FaviconApi.Tests
         [DataRow("http://http-prompt.com/", "/favicon.ico", "http://http-prompt.com/favicon.ico")]
         [DataRow("https://gitter.im/eliangcs/http-prompt", "//cdn03.gitter.im/_s/66fc778/images/favicon-normal.ico", "https://cdn03.gitter.im/_s/66fc778/images/favicon-normal.ico")]
         [DataRow("https://socket.io/get-started/chat/", "/images/favicon.png", "https://socket.io/images/favicon.png")]
+        [DataRow("http://irobot.rv4a3.org/pokestop/noord-holland/amsterdam", "../../favicon.ico", "http://irobot.rv4a3.org/favicon.ico")]
         [DataTestMethod]
         public void EnsureAbsoluteUrlTests(string url, string faviconUrl, string expectedUrl)
         {
