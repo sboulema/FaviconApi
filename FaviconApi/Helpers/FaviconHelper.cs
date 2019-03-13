@@ -10,7 +10,15 @@ namespace FaviconApi.Helpers
         {
             var uri = url.GetUri();
 
-            var htmlDocument = new HtmlWeb().Load(uri);
+            HtmlDocument htmlDocument;
+            try
+            {
+                htmlDocument = new HtmlWeb().Load(uri);
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }            
 
             var elementsAppleTouchIcon = htmlDocument.DocumentNode.SelectNodes("//link[contains(@rel, 'apple-touch-icon')]");
             if (elementsAppleTouchIcon != null && elementsAppleTouchIcon.Any())
