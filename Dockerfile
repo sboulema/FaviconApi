@@ -26,5 +26,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 COPY --from=publish /app/FaviconApi/out .
-HEALTHCHECK --interval=5s --timeout=10s --retries=3 CMD curl --fail http://localhost:5000/healthcheck || exit 1
+HEALTHCHECK --interval=5s --timeout=10s --retries=3 CMD curl --fail http://localhost:80/healthcheck || exit 1
 ENTRYPOINT ["dotnet", "FaviconApi.dll"]
