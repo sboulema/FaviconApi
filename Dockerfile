@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:sdk AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -23,8 +23,8 @@ WORKDIR /app/FaviconApi
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
-FROM microsoft/dotnet:aspnetcore-runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 COPY --from=publish /app/FaviconApi/out .
-HEALTHCHECK CMD curl --fail http://localhost:5000/healthcheck || exit
+HEALTHCHECK --interval=5s --timeout=10s --retries=3 CMD curl --fail http://localhost:5000/healthcheck || exit 1
 ENTRYPOINT ["dotnet", "FaviconApi.dll"]
